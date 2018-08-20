@@ -28,17 +28,17 @@ contract TaxableToken {
     beneficiary = _beneficiaryAddr;
   }
 
-  function () public{ revert(); }
+  function () public{ revert("Please use one of the functions"); }
 
   function mintCoins() public payable{
     /** uint percentage. Adds leftover of percentage to taxes as well */
     uint256 taxInWei = (msg.value.mul(taxRate)).div(100) + (msg.value.mul(taxRate)).mod(100);
     uint256 taxedTokens = taxInWei.div(priceInWeiPerToken); // any remainder value is left in the contract bank
-    if(taxedTokens < 1){revert();} // If no taxes can be payed then return all funds
+    if(taxedTokens < 1){revert("Not enough money provided to create even 1 tax token.");} // If no taxes can be payed then return all funds
 
     uint256 senderValue = msg.value - taxInWei;
     uint256 senderTokens = senderValue.div(priceInWeiPerToken);
-    if(senderTokens < 1) {revert();} // must create atleast one token
+    if(senderTokens < 1) {revert("Not enough money to mint tokens for reciever");} // must create atleast one token
     
     // leftOverBalance[msg.sender] = leftOverBalance[msg.sender].add(senderValue.mod(priceInWeiPerToken));
     msg.sender.transfer(senderValue.mod(priceInWeiPerToken)); // leftover Wei < 1 token's worth, return it
@@ -51,19 +51,19 @@ contract TaxableToken {
   }  
 
   function redeemTokens(uint256 _tokens) public {
-    require(msg.sender == beneficiary); // replace with msg.sender is in approved list
-    require(_tokens <= balanceOf[msg.sender]);
+    require(msg.sender == beneficiary, "You don't have permissions to widraw money"); // replace with msg.sender is in approved list
+    require(_tokens <= balanceOf[msg.sender], "You don't have enough tokens to widraw that amount");
     
     totalSupply = totalSupply.sub(_tokens);
     balanceOf[msg.sender] = balanceOf[msg.sender].sub(_tokens);
     uint256 weiToSend = (priceInWeiPerToken.mul(_tokens));
-    msg.sender.transfer( weiToSend );
+    msg.sender.transfer(weiToSend);
     //"Beneficary SENDER redeemed TOKENS and recieved WEI. The new total supply is TOTALSUPPLY"
     emit Redeemed(msg.sender,_tokens,weiToSend, totalSupply);
   }
   function transfer(address _to, uint256 _value) public returns(bool){
-    require (_value <= balanceOf[msg.sender]);
-    require (_to != address(0));
+    require (_value <= balanceOf[msg.sender], "Not enough tokens to complete this transaction");
+    require (_to != address(0), "Not a valid address");
     
     balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);
     balanceOf[_to] = balanceOf[_to].add(_value);
