@@ -1,6 +1,6 @@
 # Argonaut Toolkit
 
-Abstract: Decentralized Governance for Nonprofits and other entities based around Holacratic ideas of flat governance and role definations. Features a new type of token, Taxable Token, used for continous and sustainable funding for decentralized entities and ENS based org and chapter topography for identification. Deployed on QtumX PoA chain with Plasma ERC20 support to tether funding and token balances on Qtum mainnet allowing governance transactions to be free and complex while tokens and funding can be secured by Qtum mainnet. 
+Abstract: Decentralized Governance for Nonprofits and other entities based around Holacratic ideas of flat governance and role definitions. Features a new type of token, Taxable Token, used for continuous and sustainable funding for decentralized entities and ENS based org and chapter topography for identification. Deployed on QtumX PoA chain with Plasma ERC20 support to tether funding and token balances on Qtum mainnet allowing governance transactions to be free and complex while tokens and funding can be secured by Qtum mainnet. 
 
 # Taxable Token QRC-20 Mintable
 The Taxable Token is a new specification of a type of token that is continously minted. During contract creation the token is pegged to a ratio in the native token, then anyone is able to mint new tokens by depositing the native token into the contract. The contract also takes in a taxrate at the begining of 
@@ -9,8 +9,8 @@ For example, if the ratio is set 1 QTUM : 100 Tokens, with a tax rate of 20%, th
 [More Info To Be Added Later]
 
 ## TODO
-=> Write tests to ensure the bounds of the contract work as expected
-=> Add multi beneficiary support
+- Write tests to ensure the bounds of the contract work as expected
+- Add multi beneficiary support
 
 # Decentralized Holocratic Organization
 [ More Info To Be Added Later]
