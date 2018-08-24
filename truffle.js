@@ -15,9 +15,21 @@
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
-  develop: {
-    host: "127.0.0.1",
-    port: 9545,
-    network_id: "*"
-  }
+  networks:{
+    develop: {
+      host: "127.0.0.1",
+      port: 9545,
+      network_id: "*"
+    },
+    gmain:{
+      host: "0.0.0.0",
+      port: 8545,
+      network_id: "*"
+    },
+    gside:{
+      host: "0.0.0.0",
+      port: 8546,
+      network_id: "*"
+    } 
+  }   
 };
