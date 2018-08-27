@@ -5,7 +5,7 @@ Abstract: Decentralized Governance for Nonprofits and other entities based aroun
 # Taxable Token QRC-20 Mintable
 The Taxable Token is a new specification of a type of token that is continously minted. During contract creation the token is pegged to a ratio in the native token, then anyone is able to mint new tokens by depositing the native token into the contract. The contract also takes in a taxrate at the begining of 
 
-For example, if the ratio is set 1 QTUM : 100 Tokens, with a tax rate of 20%, then for every 1 QTUM sent to the contract, the sender will receive 80 tokens, with 20 tokens being taxed and sent to the beneficiary. In the example of a non profit, you might have an admin chapter which takes the taxed tokens, and regular org chapters which petition for local events or local sponsorship, which donors could fund directly with their tokens. 
+For example, if the ratio is set 1 QTUM : 100 Tokens, with a tax rate of 20%, then for every 1 QTUM sent to the contract, the sender will receive 80 tokens, with 20 tokens being taxed and sent to the beneficiary. In the example of a non profit, you might have an admin chapter which takes the taxed tokens, and regular org chapters which petition for local events or local sponsorship, which donors could fund directly with their tokens. <br />
 [More Info To Be Added Later]
 
 ## TODO
@@ -16,7 +16,7 @@ For example, if the ratio is set 1 QTUM : 100 Tokens, with a tax rate of 20%, th
 [ More Info To Be Added Later]
 ## TODO
 
-# Plasma Implementation
-Allows for free transactions on the governance chain, allowing for increased role based transactions to be delegated there without drawing on funds. Also insures that fund allocation is still secure on the mainnet chain. 
+# POA Bridge Implementation
+Allows for free transactions on the governance chain, allowing for increased role based transactions to be delegated there without drawing on funds. Also insures that fund allocation is still secure on the mainnet chain. <br />
 [ More Info To Be Added Later]
 ## Todo
