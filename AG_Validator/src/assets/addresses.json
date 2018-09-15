@@ -1,16 +1,52 @@
 {
-  "main": [
-    {
-      "pub": "qMsTgbfEVjx58cp2cXnzNPZBAED9mpCVCm",
-      "hex": "2f4bc4f8322278fb53101efeb1e008ebb80b7a24",
-      "priv": ""
-    }
-  ],
-  "govr": [
-    {
-      "pub": "qJ8i3M7yvfpK6zqbgTpECZRZaDSxa4QE7e",
-      "hex": "064d7daebdbc83c57ea19902b06481dd7c2b3a60",
-      "priv": ""
-    }
-  ]
+  "a1": {
+    "pub": "qMsTgbfEVjx58cp2cXnzNPZBAED9mpCVCm",
+    "hex": "2f4bc4f8322278fb53101efeb1e008ebb80b7a24",
+    "priv": "cSi6fN4i6xWRj4fhchXLuMcAxH4eEigyz58u7CPhXv6GjCfycqhE"
+  }, 
+  "a2": {
+    "pub": "qNmbrXRLfGd4pQEYSqoJZmQ4TQTQ2AUGBV",
+    "hex": "392838698e9557fed418d051cf817422b96cf3c3",
+    "priv": "cTigcKAkTgstBMoS2oKJM4Qv9bGUeg4aNP2CUGkygcdJTrxQnQiQ"
+  },
+  "a3": {
+    "pub": "qJ8i3M7yvfpK6zqbgTpECZRZaDSxa4QE7e",
+    "hex": "064d7daebdbc83c57ea19902b06481dd7c2b3a60",
+    "priv": "cQvSeB2ficRJ1NpFuhmqakmnRBmmUaiNfnCVucUFSpGbMMdumjJK"
+  },
+  "a4": {
+    "pub": "qK45T8sYx7PbktHesMCifcsgH7mvc18fCq",
+    "hex": "106568c275ee05ace5a7299baac8280cbeb62d24",
+    "priv": "cRA5vGh2AHYZNMzdqAgpjUS4ado1NVKFjwGNLLzgXXJBPHWuwAs5"
+  },
+  "a5": {
+    "pub": "qgDRQ9M1C18UYPWuKf4j9zw78eGc7YovwT",
+    "hex": "f884724961cabd0991a6b2dfeb55fe80492c64e5",
+    "priv": "f884724961cabd0991a6b2dfeb55fe80492c64e5"
+  },
+  "a6": {
+    "pub": "qMDW56nmH4q4Jed4nEY2SMzhfdUPQHDeij",
+    "hex": "281df4cc33174f264df31f8a6575a7c5b10f9a36",
+    "priv": "cV5FdyNWQo811JWcVcDPrKr2K6wFa1hm6dDyQP8tPTUcqdTppAkr"
+  },
+  "a7": {
+    "pub": "qNGN11duWa2Hyjnysi95agSMGmFRjSFAuU",
+    "hex": "33a097ceba1d223a529e937f36f045489283c87b",
+    "priv": "cSrUMuPZF58Mtvr1gmoRXeedACbTb7hVWw3uha6Z9AAGQxhpUdyU"
+  },
+  "a8": {
+    "pub": "qPLTcdifWzgnLCcmTkcjhaDx8Wg6awRZUM",
+    "hex": "3f5f11b0e970568cbe5e965738a153146035e197",
+    "priv": "cVSPa1yWiPR3mXqneMbTy425eRbjff3KyVCY1FP98or29HsDDKMt"
+  },
+  "a9": {
+    "pub": "qRMWU1ksnNsjM5w4nK96x3Trn56pkN8JrF",
+    "hex": "55821de9a17a9e7b33f84cc013365648635b2794",
+    "priv": "cPGCFGxam6He6QiRHkh8QZkBaaM1Sy67spTJech6qa4rvVvVJnM1"
+  },
+  "a10": {
+    "pub": "qTeE9Wn8aQ5Fy4FwgyD7vn335VENNxEUtS",
+    "hex": "6e9bd1400528621a6bb866e9f74e8561c64e6af5",
+    "priv": "cTTL3mgeNzWfzRzJzqwUF4uiEFBAr8d6NwUFK6TC5MbVN9N9ASgY"
+  }
 }
