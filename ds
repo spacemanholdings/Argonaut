@@ -1,4 +1,0 @@
-docker stop gmain gside
-docker rm gmain gside
-docker run --name gmain -d -p 8545:8545 trufflesuite/ganache-cli:latest
-docker run --name gside -d -p 8546:8545 trufflesuite/ganache-cli:latest
