@@ -3,9 +3,9 @@ pragma solidity ^0.4.24;
 import "./ENS.sol";
 
 /**
- * The ENS registry contract.
+ * The ONS (Org Name Service) registry contract.
  */
-contract ENSRegistry is ENS {
+contract ONSRegistry is ENS {
   struct Record {
     address owner;
     address resolver;
@@ -16,15 +16,16 @@ contract ENSRegistry is ENS {
 
   // Permits modifications only by the owner of the specified node.
   modifier only_owner(bytes32 node) {
-    require(records[node].owner == msg.sender);
+    require(records[node].owner == msg.sender, "The address does not have ownership of that node");
     _;
   }
 
   /**
     * @dev Constructs a new ENS registrar.
+    * @param _rootNode The bytes32 namehash for the rootnode (in our case, 'arg' = 0x54c71d90ed759cd3cfc1d6850f7a58994a9879fe9456fd90f73645fe535f739a)
     */
-  constructor() public {
-    records[0x0].owner = msg.sender;
+  constructor(bytes32 _rootNode) public {
+    records[_rootNode].owner = msg.sender;
   }
 
   /**
