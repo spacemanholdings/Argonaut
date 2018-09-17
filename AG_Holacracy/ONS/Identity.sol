@@ -19,11 +19,10 @@ contract Identity {
     _;
   }
 
-  constructor(bytes32 _ownerLabel, bytes32 _ownerNode, address _newAddr, string _newName, string _newEmail, bytes32 _newIpfsHash) public{
+  constructor(bytes32 _ownerLabel, IdentityRegistrar iR, address _newAddr, string _newName, string _newEmail, bytes32 _newIpfsHash) public{
     owner = msg.sender;
     IDENT.addr = msg.sender;
-    ENS ons = ENS(0xeb3b8911f31372d597f32206fe731a148d57043c);
-    IdentityRegistrar iR = IdentityRegistrar(0xdb515ec28da84b38e033667bc0f1878b32740651);
+    //ENS ons = ENS(0xeb3b8911f31372d597f32206fe731a148d57043c);
     iR.register(_ownerLabel, address(msg.sender), address(this));
     //ons.setResolver(_ownerNode, address(this));
     setInfo(_newAddr, _newName, _newEmail, _newIpfsHash);
@@ -52,7 +51,7 @@ contract Identity {
   function setName(string _newName) public ownerOnly(msg.sender) { IDENT.name = _newName; emit NewName(IDENT.name); }
   function setEmail(string _newEmail) public ownerOnly(msg.sender) { IDENT.email = _newEmail; emit NewEmail(IDENT.email); }
   function setIpfsHash(bytes32 _newIpfsHash) public ownerOnly(msg.sender) { IDENT.ipfsHash = _newIpfsHash; emit NewContentHash(IDENT.ipfsHash); }
-  function setInfo(address _newAddr, string _newName, string _newEmail, bytes32 _newIpfsHash) ownerOnly(msg.sender) public {
+  function setInfo(address _newAddr, string _newName, string _newEmail, bytes32 _newIpfsHash) public ownerOnly(msg.sender)  {
     IDENT.addr = _newAddr; 
     emit NewAddress(IDENT.addr); 
     IDENT.name = _newName; 
