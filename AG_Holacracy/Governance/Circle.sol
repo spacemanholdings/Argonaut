@@ -38,12 +38,22 @@ contract Circle{
 
     TODO: Replace (address) LeadLink to require an Identity
     */
+  /*
   constructor(ENS onsAddr, FIFSRegistrar _ArgRegistrar, bytes32 _circleLabel, bytes32 _circleNode) public {
     ons = onsAddr;
     thisNode = _circleNode;
     leadLink = msg.sender;
     _ArgRegistrar.register(_circleLabel, address(this));
-    //register(keccak256(abi.encodePacked('leadlink')), leadLink);
+    //register(keccak256(abi.encodePacked('leadlink')), leadLink); 
+  }*/
+  
+  constructor(bytes32 _circleLabel, bytes32 _circleNode) public {
+    ons = ENS(0xeb3b8911f31372d597f32206fe731a148d57043c);
+    FIFSRegistrar ArgRegistrar = FIFSRegistrar(0xa7bc4a9918ba5916f56798307bdceb38e0d84be2);
+    thisNode = _circleNode;
+    leadLink = msg.sender;
+    ArgRegistrar.register(_circleLabel, address(this));
+    ons.setResolver(_circleNode, address(this));
   }
 
   /**
@@ -77,7 +87,7 @@ contract Circle{
     @param _assignedTo the address this role is assigned to
    */
   function newRole(string _role, string _purpose, address _assignedTo) public {
-    require(leadLink == msg.sender, "You are not the lead link");
+    //require(leadLink == msg.sender, "You are not the lead link");
     
     bytes32 roleLabel = keccak256(bytes(_role));
     roles[roleLabel] = Role({
@@ -89,6 +99,7 @@ contract Circle{
     register(roleLabel, _assignedTo);
     emit NewRoleCreated(_role, _purpose, _assignedTo);
   }
+    
 
   function addDomainToRole(bytes32 _roleLabel, bytes32 _domainLabel, address _domainAddress) public {
     roles[_roleLabel].domains[_domainLabel] = _domainAddress; 
