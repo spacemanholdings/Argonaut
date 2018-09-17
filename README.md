@@ -1,9 +1,26 @@
+Table of Contents
+=================
+
+   * [Argonaut Toolkit](#argonaut-toolkit)
+      * [1. Holacracy](#1-holacracy)
+         * [1.2 Circle Governance](#12-circle-governance)
+         * [1.3 Roles](#13-roles)
+         * [1.4 Domains](#14-domains)
+      * [2. Organization Name Service](#2-organization-name-service)
+         * [2.2 Namehash](#22-namehash)
+         * [2.3 Upgradability &amp; Lifecycle Management](#23-upgradability--lifecycle-management)
+         * [2.4 Root Trust](#24-root-trust)
+      * [3. Taxable Token](#3-taxable-token)
+         * [3.2 Unlimited Supply &amp; Value Peg](#32-unlimited-supply--value-peg)
+         * [3.3 Transfer Between Chains](#33-transfer-between-chains)
+         * [3.4 Monetary Supply Control](#34-monetary-supply-control)
+
+
 # Argonaut Toolkit
 
 Abstract: AG Toolkit is a system of modular components that work together to build a system for scalable decentralized governance. Primarily focused on distributed non profits, this same governance structure can be implemented by any type of organization, whether it's a cryptocurrency foundation, a fraternity, a global education initaive, or a local group of artists. Features include a new type of Token, Taxable Token, used for continuous and sustainable funding for decentralized entities and ENS based org and chapter topography for identification. 
 
 The governance contracts can all be deployed on a Qtum X PoA governance chain with validator nodes moving tokens from one chain to another. In this way all the expensive governance transactions, voting, role assigments, data storage, etc can be done fairly cheaply while still allowing a way to have a QRC20 style token on the main chain for security. 
-
 
 ## 1. Holacracy
 Holacracy is a new way of structuring and running your organization that replaces the conventional management hierarchy. Instead of operating top-down, power is distributed throughout the organization, giving individuals and teams more freedom to self-manage, while staying aligned to the organization’s purpose. It was first written about in 2015 and has been slowing gaining attention. 
@@ -83,13 +100,13 @@ Moreover, by mapping multiple URIs to the <i>same</i> identity contract, I can s
 dev.members.chicago.blockchainedu.arg and dev.members.spacemanholdings.arg could map to the <i>same</i> identity contract, without needing me to signup and replicate and fragment my information across multiple servers. Like a facebook login, but without big brother profiteering from your data. 
 
 
-## Taxable Token
+## 3. Taxable Token
 The Taxable Token is a new specification of a type of token that is 
 continously minted. During contract creation the token is pegged to a 
 ratio in the native token, then anyone is able to mint new tokens by 
 depositing the native token into the contract. The contract takes in a taxrate at creation and whenever new coins are minted, the taxed amount is tranferred to the beneficary's address. 
 
-### Unlimited Supply & Value Peg
+### 3.2 Unlimited Supply & Value Peg
 For example, if the ratio is set 1 QTUM : 100 Tokens, with a tax rate of 
 20%, then for every 1 QTUM sent to the contract, the sender will receive 
 80 tokens, with 20 tokens being taxed and sent to the beneficiary. In 
@@ -100,8 +117,8 @@ tokens.
 
 This provides an alternative to raising funds using the ICO model for organiaztions that see such models as large risks. There is now a good way to offer a flexible price token (periods can be set for high/low taxrate changing effective price while leving the peg untouched) for potential services they can offer. 
 
-### Transfer Between Chains
+### 3.3 Transfer Between Chains
 Another part for the taxable token it is portable between sidechains and the main chain. This is very important because all the previously described governance infrastructure is *expensive*. By moving it all off chain, we can signifcantly increase adoption for using holacractic governance methods (alternative webapp applications for example have flat per user costs). We can mimic these pricing models while still allowing for nonprofits and other decentralized organizations to maintain a monetary supply token. 
 
-### Monetary Supply Control
+### 3.4 Monetary Supply Control
 A really good reason to have an QRC 20 instead of a simple Qtum/Eth wrapper token is to build in monetary supply controls. For example, what if you wanted to restrict the redeem function (converting tokens to Eth) to treasurers of organizations *only* and donors shouldn't be able to pull back their pledges? These kinds of expressive configaturations and interesting economic desicions only work if you can mess around with the structure of the money you're using.
