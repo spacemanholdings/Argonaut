@@ -1,69 +1,49 @@
 pragma solidity ^0.4.24;
 
 import "./ENS.sol";
-import "./Resolver.sol";
+interface FIFSRegistrar {function register(bytes32 label, address owner) external;}
+
+//import "./Resolver.sol";
 
 contract Circle{
   ENS ons;
-  bytes32 rootNode;
   bytes32 thisNode;
-  bytes32 bankNode;
-  
-  bytes32 leadLinkLabel = 0x868c10e50667b6f363f5d54aa63ab277e894cacf9f9b1cd2e1521cc7d835a3ed; //precomputed keccak256('leadlink')
+  address leadLink;
 
   struct Role {
     string role;
     string purpose;
     mapping(bytes32 => address) domains; //maps keccak256(DOMAIN NAME) to contract address for domain
   }
-
-
-  mapping(bytes32 => address) subdomains;
-  mapping(address => Role[]) members; //maps addresses to any roles they may have within the orginization
-
-
-  event NewRole(string indexed memberName, bytes32 indexed memberNode, string indexed roleName);
-  event CashOut(uint256 _tokensAmt, uint256 _ethToTresurer);
+  mapping(bytes32 => address) domains;  //keccak256('domainName') => domain address
+  mapping(bytes32 => Role) roles;       //keccak256('roleName') => Role struct
 
   modifier only_owner(bytes32 label) {
-    address currentOwner = ons.owner(keccak256(abi.encodePacked(rootNode, label)));
+    address currentOwner = ons.owner(keccak256(abi.encodePacked(thisNode, label)));
     require(currentOwner == 0 || currentOwner == msg.sender, "This address does not have ownership of that node");
     _;
   }
 
-  modifier isMember(address _addr) {
-    require(members[_addr].length > 0, "This address does not have membership within this circle");
-    _;
-  }
+  event NewDomainForRole(bytes32 _roleLabel, bytes32 _domainLabel, address _domainAddress);
+  event NewRoleCreated(string _role, string _purpose, address indexed _assignedTo);
+  event NewLeadLink(address indexed _leadlink);
 
   /**
     Constructor
-    @param onsAddr The address of the main ONS registry
-    @param _rootCircleNode The node (full namehash) that is the parent org for this circle (ex. facebook.marketing.ben.arg rootCircleNode would be namehash('ben.arg') )
-    @param _rootBankNode The node (full namehash) where the token contract for this org is defined. Only the treasurer may be able to call transfer/cashout of token assets on behalf of this circle
-    @param _circleNode The node (full namehash) that this circle has ownership over. Could be circle.arg, or might be circle.circle.arg, etc
-    @param _leadLink The address for the lead link of this circle. Constructor will register leadlink.circle
+    param onsAddr The address of the main ONS registry
+    param _rootCircleNode The node (full namehash) that is the parent org for this circle (ex. facebook.marketing.ben.arg rootCircleNode would be namehash('ben.arg') )
+    param _rootBankNode The node (full namehash) where the token contract for this org is defined. Only the treasurer may be able to call transfer/cashout of token assets on behalf of this circle
+    param _circleNode The node (full namehash) that this circle has ownership over. Could be circle.arg, or might be circle.circle.arg, etc
+    param _leadLink The address for the lead link of this circle. Constructor will register leadlink.circle
 
     TODO: Replace (address) LeadLink to require an Identity
     */
-  constructor(
-    ENS onsAddr, 
-    bytes32 _rootCircleNode, 
-    bytes32 _rootBankNode, 
-    bytes32 _circleNode, 
-    address _leadLink
-  ) public {
+  constructor(ENS onsAddr, FIFSRegistrar _ArgRegistrar, bytes32 _circleLabel, bytes32 _circleNode) public {
     ons = onsAddr;
-    rootNode = _rootCircleNode; 
-    bankNode = _rootBankNode;
     thisNode = _circleNode;
-
-    // Precomputed Keccak256 for ("leadlink")
-    register(leadLinkLabel, _leadLink);
-
-    // Register members.circlenode and take ownership of it  
-    // 0x is precomputed Keccak256 for ("members")
-    // register(0xef9dd5dee115f62929cb2e75e8e4c5e964121efc81aabbd2eaf2002005ad536e, address(this));
+    leadLink = msg.sender;
+    _ArgRegistrar.register(_circleLabel, address(this));
+    //register(keccak256(abi.encodePacked('leadlink')), leadLink);
   }
 
   /**
@@ -74,6 +54,14 @@ contract Circle{
     */
   function register(bytes32 label, address owner) private only_owner(label) {
     ons.setSubnodeOwner(thisNode, label, owner);
+  }
+  
+  //Call after transfering ownership
+  function setLeadLink(address _newLead) public {
+    require(leadLink == msg.sender, "You don't own this contract");
+    leadLink = _newLead;
+    register(keccak256(abi.encodePacked("leadlink")), _newLead);
+    emit NewLeadLink(_newLead);
   }
 
   function getSubdomainOwner(bytes32 label) public view returns (address) {
@@ -88,14 +76,33 @@ contract Circle{
     @param _purpose The purpose of the role
     @param _assignedTo the address this role is assigned to
    */
-  function addRole(string _role, string _purpose, address _assignedTo) public {
-    require(getSubdomainOwner(leadLinkLabel) == msg.sender, "You are not the lead link");
+  function newRole(string _role, string _purpose, address _assignedTo) public {
+    require(leadLink == msg.sender, "You are not the lead link");
+    
+    bytes32 roleLabel = keccak256(bytes(_role));
+    roles[roleLabel] = Role({
+      role : _role,
+      purpose : _purpose
+    });
 
+    // Register role.circle.org.arg
+    register(roleLabel, _assignedTo);
+    emit NewRoleCreated(_role, _purpose, _assignedTo);
   }
 
+  function addDomainToRole(bytes32 _roleLabel, bytes32 _domainLabel, address _domainAddress) public {
+    roles[_roleLabel].domains[_domainLabel] = _domainAddress; 
+    address roleAddress = getSubdomainOwner(_roleLabel);
+    register(_domainLabel, roleAddress);
+    emit NewDomainForRole(_roleLabel, _domainLabel, _domainAddress); 
+  } 
+
+  function isDomainInRole(bytes32 _roleLabel, bytes32 _domainLabel) public view returns(bool){
+    if(roles[_roleLabel].domains[_domainLabel] != 0){return true;}
+    return false;
+  }
+
+  function getDomainAddress(bytes32 _domainLabel) public view returns (address domainAddress) {domainAddress = domains[_domainLabel];}
+
   function isCircle() external pure returns(bool){return true;} 
-  //function cashOut() {}
-
-
-
 }
