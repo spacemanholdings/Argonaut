@@ -25,7 +25,7 @@ contract Circle{
   }
 
   event NewDomainForRole(bytes32 _roleLabel, bytes32 _domainLabel, address _domainAddress);
-  event NewRoleCreated(string _role, string _purpose, address indexed _assignedTo);
+  event NewRoleCreated(address indexed _assignedTo, string _role, string _purpose);
   event NewLeadLink(address indexed _leadlink);
 
   /**
@@ -79,7 +79,7 @@ contract Circle{
     return owner;
   }
 
- 
+
   /**
     @dev Lead can create and assign new roles. 
     @param _role The name of the role to be defined, ("secretary", "community_manager", etc)
@@ -87,17 +87,19 @@ contract Circle{
     @param _assignedTo the address this role is assigned to
    */
   function newRole(string _role, string _purpose, address _assignedTo) public {
-    //require(leadLink == msg.sender, "You are not the lead link");
+    require(leadLink == msg.sender, "You are not the lead link");
     
     bytes32 roleLabel = keccak256(bytes(_role));
+
     roles[roleLabel] = Role({
       role : _role,
       purpose : _purpose
     });
+    
 
     // Register role.circle.org.arg
     register(roleLabel, _assignedTo);
-    emit NewRoleCreated(_role, _purpose, _assignedTo);
+    emit NewRoleCreated(_assignedTo,_role, _purpose);
   }
     
 
