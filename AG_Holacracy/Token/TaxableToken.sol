@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-import "./lib/SafeMath.sol";
+import "./SafeMath.sol";
 
 contract TaxableToken {
   using SafeMath for uint256;
@@ -9,6 +9,9 @@ contract TaxableToken {
   event Transfer(address indexed from, address indexed to, uint256 value);
   event Redeemed(address indexed from, uint256 tokensRedeemed, uint256 weiRedeemed, uint256 newSupply);
   
+  event GoingToOtherChain(address indexed senderFromThisChain, address indexed otherChainReciever, uint256 amount);
+  event ComingFromOtherChain(address indexed reciever, uint256 amount);
+
   // State
   mapping (address => uint256) public balanceOf;
   /** Maintains remainder of coins that aren't enough to mint a token */
@@ -73,13 +76,21 @@ contract TaxableToken {
 
   function getBalanceOf(address _addr) public view returns (uint) { return balanceOf[_addr]; }
 
-  function getTotalSupply() public view returns (uint256){
-    return totalSupply;
+  function getTotalSupply() public view returns (uint256){return totalSupply;}
+  function getCostInEth() public view returns (uint256){return (priceInWeiPerToken * 1 ether);}
+  function getCostInWei() public view returns (uint256){return priceInWeiPerToken;}
+
+  function transferToOtherChain(address reciever, uint256 amount) public {
+    // FIXME: Add validator only checks
+    balanceOf[msg.sender].sub(amount);
+    totalSupply.sub(amount);
+    emit GoingToOtherChain(msg.sender, reciever, amount);
   }
-  function getCostInEth() public view returns (uint256){
-    return (priceInWeiPerToken * 1 ether);
-  }
-  function getCostInWei() public view returns (uint256){
-    return priceInWeiPerToken;
+
+  function comingFromOtherChain(address reciever, uint256 amount) public {
+    // FIXME: Add validtor only checks
+    balanceOf[reciever].add(amount);
+    totalSupply.add(amount);
+    emit ComingFromOtherChain(reciever, amount);
   }
 }
