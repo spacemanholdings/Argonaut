@@ -11,12 +11,12 @@ contract Identity {
   id IDENT;
   address owner;
 
-  modifier ownerOnly(address _owner){
+  modifier ownerOnly(address _owner) {
     require(_owner == owner, "This address doesn't own this identity");
     _;
   }
 
-  constructor(address _addr){
+  constructor(address _addr) public{
     owner = msg.sender;
     IDENT.addr = _addr;
   }
@@ -36,7 +36,16 @@ contract Identity {
   function setOwner(address _newOwn) public ownerOnly(msg.sender) { owner = _newOwn; emit NewOwner(owner); }
   function setAddress(address _newAddr) public ownerOnly(msg.sender) { IDENT.addr = _newAddr; emit NewAddress(IDENT.addr); }
   function setName(string _newName) public ownerOnly(msg.sender) { IDENT.name = _newName; emit NewName(IDENT.name); }
-  function setEmail(string _newName) public ownerOnly(msg.sender) { IDENT.email = _newEmail; emit NewEmail(IDENT.email); }
+  function setEmail(string _newEmail) public ownerOnly(msg.sender) { IDENT.email = _newEmail; emit NewEmail(IDENT.email); }
   function setIpfsHash(bytes32 _newIpfsHash) public ownerOnly(msg.sender) { IDENT.ipfsHash = _newIpfsHash; emit NewContentHash(IDENT.ipfsHash); }
+
+  // INTERFACE FUNCTIONS
+  function supportsInterface(bytes4 interfaceID) public pure returns (bool){
+    return interfaceID == 0x3b3b57de;
+  }
+  function addr(bytes32 node) public view returns (address){
+    return address(this); // so you can figure out what the dev.identity.arg address is. 
+      // what this contract points to is gotten using getAddr();  
+  }
 
 }
