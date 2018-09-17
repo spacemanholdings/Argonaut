@@ -1,13 +1,6 @@
 # Argonaut Toolkit
 
-Abstract: Decentralized Governance for nonprofits and other entities 
-based around Holacratic ideas of flat governance and role definitions. 
-Features a new type of token, Taxable Token, used for continuous and 
-sustainable funding for decentralized entities and ENS based org and 
-chapter topography for identification. Deployed on QtumX PoA chain with 
-Plasma ERC20 support to tether funding and token balances on Qtum 
-mainnet allowing governance transactions to be free and complex while 
-tokens and funding can be secured by Qtum mainnet. 
+Abstract: AG Toolkit is a system of modular components that work together to build a system for scalable decentralized governance. Primarily focused on distributed non profits, this same governance structure can be implemented by any type of organization, whether it's a cryptocurrency foundation, a fraternity, a global education initaive, or a local group of artists. Features include a new type of Token, Taxable Token, used for continuous and sustainable funding for decentralized entities and ENS based org and chapter topography for identification. Deployed on QtumX PoA chain 
 
 # Taxable Token QRC-20 Mintable
 The Taxable Token is a new specification of a type of token that is 
