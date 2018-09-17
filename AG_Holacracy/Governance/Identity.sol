@@ -26,7 +26,13 @@ contract Identity {
   function getName() public view returns (string _name){ return IDENT.name; }
   function getEmail() public view returns (string _email){ return IDENT.email; }
   function getContent() public view returns (bytes32 _ipfsHash) { return IDENT.ipfsHash; }
-  
+  function getInfo() public view returns(address _addr, string _name, string _email, bytes32 _ipfsHash) {
+    _addr = IDENT.addr;
+    _name = IDENT.name;
+    _email = IDENT.email;
+    _ipfsHash = IDENT.ipfsHash;
+  }
+
   event NewOwner(address indexed _newOwner);
   event NewAddress(address indexed _newAddress);
   event NewName(string indexed _newName);
