@@ -1,5 +1,8 @@
 pragma solidity ^0.4.24;
 
+import "./ENS.sol";
+interface FIFSRegistrar {function register(bytes32 label, address owner) external;}
+
 contract Identity {
   struct id {
     address addr;
@@ -16,9 +19,13 @@ contract Identity {
     _;
   }
 
-  constructor(address _addr) public{
+  constructor(bytes32 _ownerLabel, bytes32 _ownerNode) public{
     owner = msg.sender;
-    IDENT.addr = _addr;
+    IDENT.addr = msg.sender;
+    ENS ons = ENS(0xeb3b8911f31372d597f32206fe731a148d57043c);
+    FIFSRegistrar iR = FIFSRegistrar(0xdb515ec28da84b38e033667bc0f1878b32740651);
+    iR.register(_ownerLabel, address(msg.sender));
+    ons.setResolver(_ownerNode, address(this));
   }
 
   /* Get Function for Identity */
