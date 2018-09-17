@@ -21,7 +21,7 @@ let main_logEmitter = main_token.logEmitter({minconf: 1});
 let govr_logEmitter = govr_token.logEmitter({minconf: 1});
 
 //  MAIN CHAIN \\
-main_logEmitter.on("TransferToOtherChain", (event) => {
+main_logEmitter.on("GoingToOtherChain", (event) => {
   //console.log("Transfer from Main Chain to Governance Chain Initated", event.event);
   // TX to Mint Coins on New Chain
   let amt = new BN(event.event.amount);
@@ -36,19 +36,27 @@ main_logEmitter.on("TransferToOtherChain", (event) => {
   // Generate a block
 });
 
-main_logEmitter.on("TransferedFromOtherChain", (event) => {
+main_logEmitter.on("ComingFromOtherChain", (event) => {
   console.log("Main Chain Other Event");
   console.log(event.event);
 });
 
 // GOVERNANCE CHAIN \\
-govr_logEmitter.on("TransferToOtherChain", (event) => {
-  console.log("Transfer from Governance Chain to Main Chain Initated", event.event);
-
+govr_logEmitter.on("GoingToOtherChain", (event) => {
+  //console.log("Transfer from Main Chain to Governance Chain Initated", event.event);
   // TX to Mint Coins on New Chain
+  let amt = new BN(event.event.amount);
+  govr_rpc.fromHexAddress(event.event.owner).then((owner) => {
+    console.log("Account( %s ) is moving ( %d ) tokens to Main Chain", owner,amt);
+    console.log("Owner Hex: ", event.event.owner);
+    main_token.send("transferToOtherChain", [event.event.owner, amt]).then((result) => {
+      console.log(result);
+      console.log("You should see a Main Transfered From Event if everything happened as it was supposed to");
+    });
+  }); 
   // Generate a block
 });
-govr_logEmitter.on("TransferedFromOtherChain", (event) => {
+govr_logEmitter.on("ComingFromOtherChain", (event) => {
   console.log("Governance Chain Other Event");
   console.log(event.event);
 });
