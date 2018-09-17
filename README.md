@@ -1,6 +1,6 @@
 # Argonaut Toolkit
 
-Abstract: Decentralized Governance for Nonprofits and other entities 
+Abstract: Decentralized Governance for nonprofits and other entities 
 based around Holacratic ideas of flat governance and role definitions. 
 Features a new type of token, Taxable Token, used for continuous and 
 sustainable funding for decentralized entities and ENS based org and 

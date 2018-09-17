@@ -19,13 +19,14 @@ contract Identity {
     _;
   }
 
-  constructor(bytes32 _ownerLabel, bytes32 _ownerNode) public{
+  constructor(bytes32 _ownerLabel, bytes32 _ownerNode, address _newAddr, string _newName, string _newEmail, bytes32 _newIpfsHash) public{
     owner = msg.sender;
     IDENT.addr = msg.sender;
     ENS ons = ENS(0xeb3b8911f31372d597f32206fe731a148d57043c);
     FIFSRegistrar iR = FIFSRegistrar(0xdb515ec28da84b38e033667bc0f1878b32740651);
     iR.register(_ownerLabel, address(msg.sender));
     ons.setResolver(_ownerNode, address(this));
+    setInfo(address _newAddr, string _newName, string _newEmail, bytes32 _newIpfsHash);
   }
 
   /* Get Function for Identity */
