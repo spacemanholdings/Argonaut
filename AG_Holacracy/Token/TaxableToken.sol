@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-import "./lib/SafeMath.sol";
+import "./SafeMath.sol";
 
 contract TaxableToken {
   using SafeMath for uint256;
