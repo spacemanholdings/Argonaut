@@ -44,6 +44,16 @@ contract Identity {
   function setName(string _newName) public ownerOnly(msg.sender) { IDENT.name = _newName; emit NewName(IDENT.name); }
   function setEmail(string _newEmail) public ownerOnly(msg.sender) { IDENT.email = _newEmail; emit NewEmail(IDENT.email); }
   function setIpfsHash(bytes32 _newIpfsHash) public ownerOnly(msg.sender) { IDENT.ipfsHash = _newIpfsHash; emit NewContentHash(IDENT.ipfsHash); }
+  function setInfo(address _newAddr, string _newName, string _newEmail, bytes32 _newIpfsHash) ownerOnly(msg.sender) public {
+    IDENT.addr = _newAddr; 
+    emit NewAddress(IDENT.addr); 
+    IDENT.name = _newName; 
+    emit NewName(IDENT.name);
+    IDENT.email = _newEmail;
+    emit NewEmail(IDENT.email);
+    IDENT.ipfsHash = _newIpfsHash;
+    emit NewContentHash(IDENT.ipfsHash);
+  }
 
   // INTERFACE FUNCTIONS
   function supportsInterface(bytes4 interfaceID) public pure returns (bool){
