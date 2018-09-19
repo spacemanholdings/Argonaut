@@ -18,7 +18,7 @@ Table of Contents
 
 # Argonaut Toolkit
 
-Abstract: AG Toolkit is a system of modular components that work together to build a system for scalable decentralized governance. Primarily focused on distributed non profits, this same governance structure can be implemented by any type of organization, whether it's a cryptocurrency foundation, a fraternity, a global education initaive, or a local group of artists. Features include a new type of Token, Taxable Token, used for continuous and sustainable funding for decentralized entities and ENS based org and chapter topography for identification. 
+Abstract: AG Toolkit is a system of modular components that work together to build a system for scalable decentralized governance. This governance structure can be implemented by any type of organization. Features include a new type of Token, Taxable Token, used for continuous and sustainable funding for decentralized entities, an ENS based org and chapter topography for building robust group identity services, example smart contracts for ease of use Holacractic governance deployment, and a validtator service to transfer tokens from QtumX to Qtum Mainnet. . 
 
 The governance contracts can all be deployed on a Qtum X PoA governance chain with validator nodes moving tokens from one chain to another. In this way all the expensive governance transactions, voting, role assigments, data storage, etc can be done fairly cheaply while still allowing a way to have a QRC20 style token on the main chain for security. 
 
